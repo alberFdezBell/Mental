@@ -1,10 +1,28 @@
 [gd_scene format=3 uid="uid://breufq1kddvx7"]
 
-[node name="SettingsMenu" type="Node2D" unique_id=571672508]
+[ext_resource type="Script" uid="uid://qdifwv546l2" path="res://scenes/settings_menu/settings_menu.gd" id="1_j78aw"]
 
-[node name="Label" type="Label" parent="." unique_id=743847200]
-offset_left = 212.0
-offset_top = 162.0
-offset_right = 320.0
-offset_bottom = 185.0
+[node name="SettingsMenu" type="Node2D" unique_id=571672508]
+script = ExtResource("1_j78aw")
+
+[node name="Titulo" type="Label" parent="." unique_id=743847200]
+offset_left = 110.0
+offset_top = 31.0
+offset_right = 312.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 33
 text = "Configuración"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1477452230]
+offset_left = 43.0
+offset_top = 28.0
+offset_right = 83.0
+offset_bottom = 60.0
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1538347226]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "↩"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_back_button_pressed"]
