@@ -1,10 +1,120 @@
 [gd_scene format=3 uid="uid://do6cmo7y37gg"]
 
-[node name="GameLevel" type="Node2D" unique_id=303937645]
+[ext_resource type="Script" uid="uid://101t4up6qtqn" path="res://scenes/game/game_level.gd" id="1_4lrej"]
+[ext_resource type="PackedScene" uid="uid://t3sf8rqxh1ib" path="res://scenes/game/player.tscn" id="1_gob41"]
 
-[node name="Label" type="Label" parent="." unique_id=519845284]
-offset_left = 143.0
-offset_top = 72.0
-offset_right = 1032.0
-offset_bottom = 515.0
-text = "Prueba"
+[sub_resource type="Environment" id="Environment_1sea3"]
+background_mode = 2
+background_energy_multiplier = 3.77
+
+[node name="GameLevel" type="Node3D" unique_id=2003785391]
+script = ExtResource("1_4lrej")
+
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=477491799]
+transform = Transform3D(1, 0, 0, 0, 0.018789453, 0.99982345, 0, -0.99982345, 0.018789453, 0, 12.738501, 0)
+light_energy = 3.37
+light_indirect_energy = 4.111
+light_volumetric_fog_energy = 3.963
+light_size = 0.37
+light_specular = 0.0
+shadow_enabled = true
+area_range = 43.202
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1926807040]
+transform = Transform3D(-0.4053278, 0.83044153, -0.38219923, -0.27555496, 0.28765148, 0.9172383, 0.87165296, 0.47709903, 0.11223916, -0.7766762, 19.764837, 0)
+visible = false
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=2084329798]
+transform = Transform3D(0.7734297, 0.31063506, -0.55255085, 0.27336204, 0.62301695, 0.73288685, 0.57190883, -0.7178829, 0.39694396, 0, 29.598927, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1089240086]
+environment = SubResource("Environment_1sea3")
+
+[node name="Suelo" type="CSGBox3D" parent="." unique_id=308459513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="Player" parent="." unique_id=1904831573 instance=ExtResource("1_gob41")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5611119, 0)
+
+[node name="Suelo2" type="CSGBox3D" parent="." unique_id=1645341272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
+use_collision = true
+size = Vector3(1, 10, 20)
+
+[node name="Suelo3" type="CSGBox3D" parent="." unique_id=1775973512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+use_collision = true
+size = Vector3(1, 10, 20)
+
+[node name="Suelo4" type="CSGBox3D" parent="." unique_id=905005319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -10)
+use_collision = true
+size = Vector3(20, 10, 1)
+
+[node name="Suelo5" type="CSGBox3D" parent="." unique_id=1158358455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+use_collision = true
+size = Vector3(20, 10, 1)
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=129950479]
+process_mode = 3
+
+[node name="PauseMenu" type="Control" parent="PauseMenuLayer" unique_id=10377488]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenuLayer/PauseMenu" unique_id=1572031614]
+layout_mode = 0
+offset_right = 1284.0
+offset_bottom = 728.0
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenuLayer/PauseMenu" unique_id=1993662581]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -57.5
+offset_right = 98.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenuLayer/PauseMenu/CenterContainer" unique_id=949977101]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ResumeButton" type="Button" parent="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=947788526]
+layout_mode = 2
+text = "Seguir Jugando"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=1045894942]
+layout_mode = 2
+text = "Volver al menú principal"
+
+[node name="Label" type="Label" parent="PauseMenuLayer/PauseMenu" unique_id=1609357014]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 593.99976
+offset_bottom = 325.5
+theme_override_font_sizes/font_size = 73
+text = "Pausa"
+
+[connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
