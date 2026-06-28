@@ -1,4 +1,3 @@
-
 [gd_scene format=3 uid="uid://v164jgyakedo"]
 
 [ext_resource type="Script" uid="uid://101t4up6qtqn" path="res://scenes/main_menu/main_menu.gd" id="1_4lrej"]
@@ -52,6 +51,10 @@ font = ExtResource("2_7q5vw")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wem23"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hm5id"]
+
+[sub_resource type="DPITexture" id="DPITexture_wem23"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\"/></svg>
+"
 
 [node name="GameLevel2" type="Node3D" unique_id=2003785391]
 script = ExtResource("1_4lrej")
@@ -210,6 +213,15 @@ mesh = SubResource("TextMesh_1sea3")
 
 [node name="MainMenuLayer" type="CanvasLayer" parent="." unique_id=99999999]
 
+[node name="LabelTitulo" type="Label" parent="MainMenuLayer" unique_id=635170746]
+offset_left = 1080.0
+offset_top = 24.0
+offset_right = 1244.0
+offset_bottom = 86.0
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 32
+text = "OPCIONES"
+
 [node name="LeftMenuContainer" type="MarginContainer" parent="MainMenuLayer" unique_id=99999998]
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -280,16 +292,73 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Salir"
 alignment = 0
 
+[node name="SettingsContainer" type="MarginContainer" parent="MainMenuLayer" unique_id=1733871850]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -380.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuLayer/SettingsContainer" unique_id=1536465769]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="HBoxRes" type="HBoxContainer" parent="MainMenuLayer/SettingsContainer/VBoxContainer" unique_id=1324139035]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxRes" unique_id=1428985538]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7q5vw")
+text = "Resolución: "
+
+[node name="ResolutionOption" type="OptionButton" parent="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxRes" unique_id=720744631]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_7q5vw")
+
+[node name="FullscreenCheck" type="CheckBox" parent="MainMenuLayer/SettingsContainer/VBoxContainer" unique_id=889944124]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7q5vw")
+text = " Pantalla Completa"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenuLayer/SettingsContainer/VBoxContainer" unique_id=976625711]
+layout_mode = 2
+
+[node name="HBoxVol" type="HBoxContainer" parent="MainMenuLayer/SettingsContainer/VBoxContainer" unique_id=507458252]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxVol" unique_id=1320273754]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7q5vw")
+text = "Volumen General: "
+
+[node name="VolumeSlider" type="HSlider" parent="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxVol" unique_id=1511395020]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_icons/grabber = SubResource("DPITexture_wem23")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
 [node name="BackButton" type="Button" parent="MainMenuLayer" unique_id=88888888]
-layout_mode = 0
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -218.0
-offset_top = -18.0
-offset_right = -40.0
-offset_bottom = 18.0
+offset_left = -114.0
+offset_top = 295.0
+offset_right = -20.0
+offset_bottom = 341.00012
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 0
@@ -315,13 +384,16 @@ volume_db = -13.07
 autoplay = true
 
 [node name="tililar" type="AudioStreamPlayer3D" parent="." unique_id=2141524124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.447, 0)
 stream = ExtResource("5_wem23")
 volume_db = -10.844
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.447, 0)
 
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="item_selected" from="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxRes/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
+[connection signal="toggled" from="MainMenuLayer/SettingsContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="value_changed" from="MainMenuLayer/SettingsContainer/VBoxContainer/HBoxVol/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="pressed" from="MainMenuLayer/BackButton" to="." method="_on_back_button_pressed"]
