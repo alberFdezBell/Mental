@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dsffh83ol1mhl"
+path="res://.godot/imported/empezar juego (justo despues de darle a jugar).wav-ef1b115b1edadef9585aa9f0965553ae.sample"
+
+[deps]
+
+source_file="res://res/audio/empezar juego (justo despues de darle a jugar).wav"
+dest_files=["res://.godot/imported/empezar juego (justo despues de darle a jugar).wav-ef1b115b1edadef9585aa9f0965553ae.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

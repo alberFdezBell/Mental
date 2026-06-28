@@ -40,6 +40,10 @@ height = 0.025
 text = "MENTAL"
 font = ExtResource("2_7q5vw")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7q5vw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hm5id"]
+
 [node name="GameLevel" type="Node3D" unique_id=2003785391]
 script = ExtResource("1_4lrej")
 
@@ -215,19 +219,28 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Jugar"
+alignment = 0
 
 [node name="SettingsButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999995]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Configuración"
+alignment = 0
 
 [node name="ExitButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999994]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Salir"
+alignment = 0
 
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

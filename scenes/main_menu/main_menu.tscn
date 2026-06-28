@@ -1,8 +1,11 @@
-[gd_scene format=3 uid="uid://do6cmo7y37gg"]
 
-[ext_resource type="Script" uid="uid://101t4up6qtqn" path="res://scenes/game/game_level.gd" id="1_4lrej"]
+[gd_scene format=3 uid="uid://v164jgyakedo"]
+
+[ext_resource type="Script" uid="uid://101t4up6qtqn" path="res://scenes/main_menu/main_menu.gd" id="1_4lrej"]
 [ext_resource type="PackedScene" uid="uid://t3sf8rqxh1ib" path="res://scenes/game/player.tscn" id="1_gob41"]
 [ext_resource type="FontFile" uid="uid://dhbot5c2ews1y" path="res://res/PeterFonts.otf" id="2_7q5vw"]
+[ext_resource type="AudioStream" uid="uid://1xyg64r0tr8i" path="res://res/audio/menu_principal.wav" id="4_uqeha"]
+[ext_resource type="AudioStream" uid="uid://dmvdnaiv8344" path="res://res/audio/luz_tililar.mp3" id="5_wem23"]
 
 [sub_resource type="Environment" id="Environment_1sea3"]
 background_mode = 2
@@ -40,7 +43,17 @@ height = 0.025
 text = "MENTAL"
 font = ExtResource("2_7q5vw")
 
-[node name="GameLevel" type="Node3D" unique_id=2003785391]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7q5vw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uqeha"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ob46e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wem23"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hm5id"]
+
+[node name="GameLevel2" type="Node3D" unique_id=2003785391]
 script = ExtResource("1_4lrej")
 
 [node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=477491799]
@@ -200,7 +213,7 @@ mesh = SubResource("TextMesh_1sea3")
 [node name="LeftMenuContainer" type="MarginContainer" parent="MainMenuLayer" unique_id=99999998]
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 250.0
+offset_right = 178.0
 grow_vertical = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
@@ -213,24 +226,102 @@ alignment = 1
 
 [node name="PlayButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999996]
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/font_focus_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uqeha")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ob46e")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wem23")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Jugar"
+alignment = 0
 
 [node name="SettingsButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999995]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/font_focus_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uqeha")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ob46e")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wem23")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Configuración"
+alignment = 0
 
 [node name="ExitButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999994]
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/font_focus_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
 theme_override_fonts/font = ExtResource("2_7q5vw")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uqeha")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ob46e")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wem23")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
 text = "Salir"
+alignment = 0
+
+[node name="BackButton" type="Button" parent="MainMenuLayer" unique_id=88888888]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -218.0
+offset_top = -18.0
+offset_right = -40.0
+offset_bottom = 18.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/font_focus_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7q5vw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uqeha")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ob46e")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wem23")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hm5id")
+text = "← Volver"
+alignment = 0
+
+[node name="fondo" type="AudioStreamPlayer" parent="." unique_id=1412718263]
+stream = ExtResource("4_uqeha")
+volume_db = -13.07
+autoplay = true
+
+[node name="tililar" type="AudioStreamPlayer3D" parent="." unique_id=2141524124]
+stream = ExtResource("5_wem23")
+volume_db = -10.844
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.447, 0)
 
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="MainMenuLayer/BackButton" to="." method="_on_back_button_pressed"]
