@@ -1,86 +1,236 @@
-[gd_scene format=3 uid="uid://v164jgyakedo"]
+[gd_scene format=3 uid="uid://do6cmo7y37gg"]
 
-[ext_resource type="Script" uid="uid://800m5tx6xmsg" path="res://scenes/main_menu/main_menu.gd" id="1_fsom3"]
+[ext_resource type="Script" uid="uid://101t4up6qtqn" path="res://scenes/game/game_level.gd" id="1_4lrej"]
+[ext_resource type="PackedScene" uid="uid://t3sf8rqxh1ib" path="res://scenes/game/player.tscn" id="1_gob41"]
+[ext_resource type="FontFile" uid="uid://dhbot5c2ews1y" path="res://res/PeterFonts.otf" id="2_7q5vw"]
 
-[sub_resource type="FontVariation" id="FontVariation_ob46e"]
+[sub_resource type="Environment" id="Environment_1sea3"]
+background_mode = 2
+background_energy_multiplier = 3.77
 
-[node name="MainMenu" type="Control" unique_id=1465336364]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvqyy"]
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.59
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1sea3"]
+material = SubResource("StandardMaterial3D_uvqyy")
+top_radius = 0.0
+height = 0.445
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvdij"]
+shading_mode = 0
+albedo_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
+refraction_enabled = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uvqyy"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 8.19
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4jbs"]
+shading_mode = 0
+albedo_color = Color(0.9384497, 0.9384497, 0.9384497, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xvdij"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.025
+
+[sub_resource type="TextMesh" id="TextMesh_1sea3"]
+text = "MENTAL"
+font = ExtResource("2_7q5vw")
+
+[node name="GameLevel" type="Node3D" unique_id=2003785391]
+script = ExtResource("1_4lrej")
+
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=477491799]
+transform = Transform3D(1, 0, 0, 0, 0.018789453, 0.99982345, 0, -0.99982345, 0.018789453, 0, 5.6058693, 0)
+light_energy = 0.05
+shadow_enabled = true
+shadow_blur = 10.0
+area_range = 4.462
+area_attenuation = -1.612
+
+[node name="AreaLight3D" type="AreaLight3D" parent="AreaLight3D" unique_id=2099118635]
+transform = Transform3D(1, 0, 0, 0, 0.50529116, -0.8629489, 0, 0.8629489, 0.50529116, 0, -1.3761163, 0.7137842)
+light_energy = 0.09
+shadow_enabled = true
+shadow_blur = 10.0
+area_range = 4.462
+area_attenuation = -1.612
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1926807040]
+transform = Transform3D(-0.4053278, 0.83044153, -0.38219923, -0.27555496, 0.28765148, 0.9172383, 0.87165296, 0.47709903, 0.11223916, -0.7766762, 19.764837, 0)
+visible = false
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=2084329798]
+transform = Transform3D(0.7734297, 0.31063506, -0.55255085, 0.27336204, 0.62301695, 0.73288685, 0.57190883, -0.7178829, 0.39694396, 0, 29.598927, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1089240086]
+environment = SubResource("Environment_1sea3")
+
+[node name="Suelo" type="CSGBox3D" parent="." unique_id=308459513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6762486e-05, -0.4941883, -0.0043325424)
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="pared1" type="CSGBox3D" parent="Suelo" unique_id=1645341272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5.5, 0)
+use_collision = true
+size = Vector3(1, 10, 20)
+
+[node name="pared2" type="CSGBox3D" parent="Suelo" unique_id=1775973512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5.5, 0)
+use_collision = true
+size = Vector3(1, 10, 20)
+
+[node name="pared3" type="CSGBox3D" parent="Suelo" unique_id=905005319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -10)
+use_collision = true
+size = Vector3(20, 10, 1)
+
+[node name="pared4" type="CSGBox3D" parent="Suelo" unique_id=1158358455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 10)
+use_collision = true
+size = Vector3(20, 10, 1)
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=129950479]
+process_mode = 3
+
+[node name="PauseMenu" type="Control" parent="PauseMenuLayer" unique_id=10377488]
+process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fsom3")
 
-[node name="Background" type="TextureRect" parent="." unique_id=631695527]
+[node name="ColorRect" type="ColorRect" parent="PauseMenuLayer/PauseMenu" unique_id=1572031614]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1284.0
+offset_bottom = 728.0
+color = Color(0, 0, 0, 0.39215687)
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2084915772]
-layout_mode = 0
-offset_top = 45.45
-offset_right = 1280.0
-offset_bottom = 762.45
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenuLayer/PauseMenu" unique_id=1993662581]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -57.5
+offset_right = 98.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=100279457]
-layout_mode = 2
-offset_transform_enabled = true
-alignment = 1
-
-[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=169170005]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenuLayer/PauseMenu/CenterContainer" unique_id=949977101]
 layout_mode = 2
 theme_override_constants/separation = 15
+
+[node name="ResumeButton" type="Button" parent="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=947788526]
+layout_mode = 2
+text = "Seguir Jugando"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=1045894942]
+layout_mode = 2
+text = "Volver al menú principal"
+
+[node name="Label" type="Label" parent="PauseMenuLayer/PauseMenu" unique_id=1609357014]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 593.99976
+offset_bottom = 325.5
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 73
+text = "Pausa"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1133130609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4479504, 0)
+light_energy = 5.794
+light_volumetric_fog_energy = 0.0
+light_size = 1.0
+shadow_enabled = true
+shadow_bias = 10.0
+shadow_normal_bias = 10.0
+distance_fade_enabled = true
+omni_range = 4.27
+
+[node name="Player" parent="." unique_id=1904831573 instance=ExtResource("1_gob41")]
+transform = Transform3D(1, 0, 0, 0, 0.95659965, 0.29140535, 0, -0.29140535, 0.95659965, -2.7902093, 0.97626984, 5.870865)
+
+[node name="AreaLight3D2" type="AreaLight3D" parent="." unique_id=1846709851]
+transform = Transform3D(-1, 1.1920929e-07, -1.7499811e-08, 1.7499817e-08, 4.0055486e-08, -1, -1.1920929e-07, -1, -4.005549e-08, 0, 1.9099882, 0)
+visible = false
+light_energy = 0.05
+shadow_enabled = true
+shadow_blur = 10.0
+area_range = 2.292
+area_attenuation = -13.852
+
+[node name="lampara" type="MeshInstance3D" parent="." unique_id=1808550359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8955078, 0)
+mesh = SubResource("CylinderMesh_1sea3")
+
+[node name="cable" type="MeshInstance3D" parent="lampara" unique_id=429672798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0938816, 0)
+material_override = SubResource("StandardMaterial3D_xvdij")
+mesh = SubResource("CylinderMesh_uvqyy")
+
+[node name="luzlampara" type="MeshInstance3D" parent="lampara" unique_id=416950603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.21404648, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_a4jbs")
+mesh = SubResource("CylinderMesh_xvdij")
+
+[node name="Titulo" type="MeshInstance3D" parent="." unique_id=1927218694]
+transform = Transform3D(3.7520106, 1.197999, -0.6687604, 0, 1.9472716, 3.4882886, 1.3720212, -3.2761192, 1.828832, -0.047378063, 0.1929605, 0.504724)
+mesh = SubResource("TextMesh_1sea3")
+
+[node name="MainMenuLayer" type="CanvasLayer" parent="." unique_id=99999999]
+
+[node name="LeftMenuContainer" type="MarginContainer" parent="MainMenuLayer" unique_id=99999998]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 250.0
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuLayer/LeftMenuContainer" unique_id=99999997]
+layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
-[node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer" unique_id=840064588]
-custom_minimum_size = Vector2(250, 50)
+[node name="PlayButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999996]
 layout_mode = 2
-text = "Nueva partida"
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 24
+text = "Jugar"
 
-[node name="ContinueButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer" unique_id=407045100]
-custom_minimum_size = Vector2(250, 50)
+[node name="SettingsButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999995]
 layout_mode = 2
-text = "Continuar partida"
-
-[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer" unique_id=1415698142]
-custom_minimum_size = Vector2(250, 50)
-layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 24
 text = "Configuración"
 
-[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer" unique_id=1000364609]
-custom_minimum_size = Vector2(250, 50)
+[node name="ExitButton" type="Button" parent="MainMenuLayer/LeftMenuContainer/VBoxContainer" unique_id=99999994]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7q5vw")
+theme_override_font_sizes/font_size = 24
 text = "Salir"
 
-[node name="MessageLabel" type="Label" parent="." unique_id=596765448]
-visible = false
-layout_mode = 0
-offset_left = 472.0
-offset_top = 585.0
-offset_right = 814.0
-offset_bottom = 670.0
-theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 44
-text = "No hay partida"
-
-[node name="Title" type="Label" parent="." unique_id=1010591826]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 122.0
-offset_right = 677.0
-offset_bottom = 210.0
-theme_override_fonts/font = SubResource("FontVariation_ob46e")
-theme_override_font_sizes/font_size = 64
-text = "Ecos de Luna Blanca"
-horizontal_alignment = 1
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenuLayer/PauseMenu/CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MainMenuLayer/LeftMenuContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
