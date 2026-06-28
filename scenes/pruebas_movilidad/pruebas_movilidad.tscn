@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsia7ecc0fcr8"]
+[gd_scene format=3 uid="uid://bsia7ecc0fcr8"]
 
-[ext_resource type="Script" path="res://scenes/pruebas_movilidad/player.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ok6ih1hltpew" path="res://scenes/pruebas_movilidad/player.gd" id="1_script"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_env"]
 sky_top_color = Color(0.05, 0.06, 0.08, 1)
@@ -15,21 +15,19 @@ sky_material = SubResource("ProceduralSkyMaterial_env")
 background_mode = 2
 sky = SubResource("Sky_env")
 ambient_light_source = 3
-ambient_light_color = Color(0.2, 0.22, 0.25, 1)
+ambient_light_color = Color(0.12, 0.14, 0.16, 1)
 tonemap_mode = 2
 glow_enabled = true
 glow_intensity = 0.5
-glow_strength = 1.0
 glow_bloom = 0.15
-glow_blend_mode = 1
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
-albedo_color = Color(0.18, 0.2, 0.22, 1)
-roughness = 0.85
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_walls"]
 albedo_color = Color(0.24, 0.26, 0.28, 1)
 roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.18, 0.2, 0.22, 1)
+roughness = 0.85
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -37,99 +35,646 @@ height = 1.8
 
 [node name="PruebasMovilidad" type="Node3D" unique_id=1766497739]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=911290901]
 environment = SubResource("Environment_env")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=512883164]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 25, 0)
 light_color = Color(0.7, 0.75, 0.85, 1)
-light_energy = 0.25
+light_energy = 0.15
 shadow_enabled = true
 
-[node name="Room" type="Node3D" parent="."]
+[node name="Hotel" type="Node3D" parent="." unique_id=1612957709]
 
-[node name="Floor" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-use_collision = true
-size = Vector3(30, 0.2, 30)
-material = SubResource("StandardMaterial3D_floor")
+[node name="OuterWalls" type="Node3D" parent="Hotel" unique_id=2033380782]
 
-[node name="Ceiling" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1, 0)
+[node name="WallNorth" type="CSGBox3D" parent="Hotel/OuterWalls" unique_id=867993131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, -10)
 use_collision = true
-size = Vector3(30, 0.2, 30)
-material = SubResource("StandardMaterial3D_floor")
-
-[node name="WallNorth" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -15)
-use_collision = true
-size = Vector3(30, 6, 0.2)
+size = Vector3(40, 21, 0.2)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="WallSouth" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 15)
+[node name="WallSouth" type="CSGBox3D" parent="Hotel/OuterWalls" unique_id=1445198654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 10)
 use_collision = true
-size = Vector3(30, 6, 0.2)
+size = Vector3(40, 21, 0.2)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="WallEast" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3, 0)
+[node name="WallEast" type="CSGBox3D" parent="Hotel/OuterWalls" unique_id=1626053975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 10.5, 0)
 use_collision = true
-size = Vector3(0.2, 6, 30)
+size = Vector3(0.2, 21, 20)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="WallWest" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3, 0)
+[node name="WallWest" type="CSGBox3D" parent="Hotel/OuterWalls" unique_id=476638794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 10.5, 0)
 use_collision = true
-size = Vector3(0.2, 6, 30)
+size = Vector3(0.2, 21, 20)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="Pillar" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+[node name="StairwellWalls" type="Node3D" parent="Hotel" unique_id=1904880388]
+
+[node name="StairwellDivider" type="CSGBox3D" parent="Hotel/StairwellWalls" unique_id=721521509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 10.5, 0)
 use_collision = true
-size = Vector3(2, 6, 2)
+size = Vector3(6, 21, 0.1)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="LowObstacle" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.6, 5)
+[node name="StairwellNorth" type="CSGBox3D" parent="Hotel/StairwellWalls" unique_id=1801205404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 10.5, -3)
 use_collision = true
-size = Vector3(4, 1.2, 2)
+size = Vector3(6, 21, 0.1)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="Tunnel" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.4, -5)
+[node name="StairwellSouth" type="CSGBox3D" parent="Hotel/StairwellWalls" unique_id=1297457481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 10.5, 3)
 use_collision = true
-size = Vector3(6, 0.2, 6)
+size = Vector3(6, 21, 0.1)
 material = SubResource("StandardMaterial3D_walls")
 
-[node name="OmniLight3D_1" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 5, -8)
+[node name="RoofStairsBarrier" type="CSGBox3D" parent="Hotel" unique_id=1670688798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 20.5, 0)
+use_collision = true
+size = Vector3(0.1, 1, 6)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Lights" type="Node3D" parent="Hotel" unique_id=971495458]
+
+[node name="OmniLight3D_F0_C2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1644137076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 0)
 light_color = Color(0.95, 0.85, 0.75, 1)
 light_energy = 0.8
-omni_range = 15.0
 shadow_enabled = true
+omni_range = 10.0
 
-[node name="OmniLight3D_2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 5, 8)
-light_color = Color(0.75, 0.85, 0.95, 1)
+[node name="OmniLight3D_F0_R1" type="OmniLight3D" parent="Hotel/Lights" unique_id=1165407142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F0_R2" type="OmniLight3D" parent="Hotel/Lights" unique_id=2106338980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F0_R3" type="OmniLight3D" parent="Hotel/Lights" unique_id=184920076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F0_R4" type="OmniLight3D" parent="Hotel/Lights" unique_id=1285705131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 5.75)
+light_color = Color(0.95, 0.85, 0.75, 1)
 light_energy = 0.8
-omni_range = 15.0
 shadow_enabled = true
+omni_range = 10.0
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 10)
+[node name="OmniLight3D_F1_C2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1318075634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 7, 0)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F1_R1" type="OmniLight3D" parent="Hotel/Lights" unique_id=1444169596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 7, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F1_R2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1102751741]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F1_R3" type="OmniLight3D" parent="Hotel/Lights" unique_id=729621922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 7, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F1_R4" type="OmniLight3D" parent="Hotel/Lights" unique_id=1056938770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, 5.75)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F2_C2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1508991892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 11, 0)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F2_R1" type="OmniLight3D" parent="Hotel/Lights" unique_id=710926735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 11, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F2_R2" type="OmniLight3D" parent="Hotel/Lights" unique_id=602616408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F2_R3" type="OmniLight3D" parent="Hotel/Lights" unique_id=1504616854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 11, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F2_R4" type="OmniLight3D" parent="Hotel/Lights" unique_id=1962426529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 5.75)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F3_C2" type="OmniLight3D" parent="Hotel/Lights" unique_id=640178888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 15, 0)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F3_R1" type="OmniLight3D" parent="Hotel/Lights" unique_id=1675419634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 15, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F3_R2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1112866717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 15, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F3_R3" type="OmniLight3D" parent="Hotel/Lights" unique_id=1274685631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 15, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F3_R4" type="OmniLight3D" parent="Hotel/Lights" unique_id=1583168448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 15, 5.75)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F4_C2" type="OmniLight3D" parent="Hotel/Lights" unique_id=250281008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 19, 0)
+light_color = Color(0.95, 0.85, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="OmniLight3D_F4_R1" type="OmniLight3D" parent="Hotel/Lights" unique_id=1275804225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 19, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F4_R2" type="OmniLight3D" parent="Hotel/Lights" unique_id=1319775054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 19, -5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F4_R3" type="OmniLight3D" parent="Hotel/Lights" unique_id=1078962489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 19, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="OmniLight3D_F4_R4" type="OmniLight3D" parent="Hotel/Lights" unique_id=1713941758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 19, 5.75)
+light_color = Color(0.8, 0.82, 0.85, 1)
+light_energy = 0.6
+omni_range = 12.0
+
+[node name="Hotel_Floor_0#NorthSlab" type="CSGBox3D" parent="." unique_id=1581681924]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.1, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_0#SouthSlab" type="CSGBox3D" parent="." unique_id=1150960856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.1, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_0#CorridorNorth_1" type="CSGBox3D" parent="." unique_id=1977107817]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#CorridorNorth_2" type="CSGBox3D" parent="." unique_id=1328794257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, -1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#CorridorNorth_3" type="CSGBox3D" parent="." unique_id=1762023854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#CorridorSouth_1" type="CSGBox3D" parent="." unique_id=123780981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#CorridorSouth_2" type="CSGBox3D" parent="." unique_id=1831996547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#CorridorSouth_3" type="CSGBox3D" parent="." unique_id=592873049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#RoomDividerNorth" type="CSGBox3D" parent="." unique_id=2047610120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, -5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#RoomDividerSouth" type="CSGBox3D" parent="." unique_id=807364558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_0#StairsRun1" type="CSGBox3D" parent="." unique_id=1310815941]
+transform = Transform3D(0.94868, 0.31623, 0, -0.31623, 0.94868, 0, 0, 0, 1, -17, 1, -1.5)
+use_collision = true
+size = Vector3(6.32, 0.1, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_0#StairsLanding" type="CSGBox3D" parent="." unique_id=458419016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2, 0)
+use_collision = true
+size = Vector3(2, 0.1, 6)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_0#StairsRun2" type="CSGBox3D" parent="." unique_id=1280956318]
+transform = Transform3D(0.94868, -0.31623, 0, 0.31623, 0.94868, 0, 0, 0, 1, -17, 3, 1.5)
+use_collision = true
+size = Vector3(34, 0.2, 20)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_1#NorthSlab" type="CSGBox3D" parent="." unique_id=398068438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 3.9, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_1#SouthSlab" type="CSGBox3D" parent="." unique_id=956943128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 3.9, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_1#CorridorNorth_1" type="CSGBox3D" parent="." unique_id=1901778883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#CorridorNorth_2" type="CSGBox3D" parent="." unique_id=846774505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, -1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#CorridorNorth_3" type="CSGBox3D" parent="." unique_id=1362585902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 6, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#CorridorSouth_1" type="CSGBox3D" parent="." unique_id=2029981118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#CorridorSouth_2" type="CSGBox3D" parent="." unique_id=654670285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#CorridorSouth_3" type="CSGBox3D" parent="." unique_id=657807126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 6, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#RoomDividerNorth" type="CSGBox3D" parent="." unique_id=1256785742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, -5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#RoomDividerSouth" type="CSGBox3D" parent="." unique_id=526659200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_1#StairsRun1" type="CSGBox3D" parent="." unique_id=1424498408]
+transform = Transform3D(0.94868, 0.31623, 0, -0.31623, 0.94868, 0, 0, 0, 1, -17, 5, -1.5)
+use_collision = true
+size = Vector3(6.32, 0.1, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_1#StairsLanding" type="CSGBox3D" parent="." unique_id=1504423518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 6, 0)
+use_collision = true
+size = Vector3(2, 0.1, 6)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_1#StairsRun2" type="CSGBox3D" parent="." unique_id=1332642047]
+transform = Transform3D(0.94868, -0.31623, 0, 0.31623, 0.94868, 0, 0, 0, 1, -17, 7, 1.5)
+use_collision = true
+size = Vector3(34, 0.2, 20)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_2#NorthSlab" type="CSGBox3D" parent="." unique_id=2129996001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 7.9, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_2#SouthSlab" type="CSGBox3D" parent="." unique_id=309798833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 7.9, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_2#CorridorNorth_1" type="CSGBox3D" parent="." unique_id=522058884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 10, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#CorridorNorth_2" type="CSGBox3D" parent="." unique_id=390137728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 10, -1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#CorridorNorth_3" type="CSGBox3D" parent="." unique_id=1181202780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 10, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#CorridorSouth_1" type="CSGBox3D" parent="." unique_id=368871853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 10, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#CorridorSouth_2" type="CSGBox3D" parent="." unique_id=1590857726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 10, 1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#CorridorSouth_3" type="CSGBox3D" parent="." unique_id=840799795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 10, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#RoomDividerNorth" type="CSGBox3D" parent="." unique_id=1066489524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 10, -5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#RoomDividerSouth" type="CSGBox3D" parent="." unique_id=776986237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 10, 5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_2#StairsRun1" type="CSGBox3D" parent="." unique_id=1476539918]
+transform = Transform3D(0.94868, 0.31623, 0, -0.31623, 0.94868, 0, 0, 0, 1, -17, 9, -1.5)
+use_collision = true
+size = Vector3(6.32, 0.1, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_2#StairsLanding" type="CSGBox3D" parent="." unique_id=706161385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 10, 0)
+use_collision = true
+size = Vector3(2, 0.1, 6)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_2#StairsRun2" type="CSGBox3D" parent="." unique_id=413388733]
+transform = Transform3D(0.94868, -0.31623, 0, 0.31623, 0.94868, 0, 0, 0, 1, -17, 11, 1.5)
+use_collision = true
+size = Vector3(34, 0.2, 20)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_3#NorthSlab" type="CSGBox3D" parent="." unique_id=238755715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 11.9, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_3#SouthSlab" type="CSGBox3D" parent="." unique_id=408125517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 11.9, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_3#CorridorNorth_1" type="CSGBox3D" parent="." unique_id=1144994142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 14, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#CorridorNorth_2" type="CSGBox3D" parent="." unique_id=1678994204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 14, -1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#CorridorNorth_3" type="CSGBox3D" parent="." unique_id=1574509786]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 14, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#CorridorSouth_1" type="CSGBox3D" parent="." unique_id=2018085815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 14, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#CorridorSouth_2" type="CSGBox3D" parent="." unique_id=861983263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 14, 1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#CorridorSouth_3" type="CSGBox3D" parent="." unique_id=602745086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 14, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#RoomDividerNorth" type="CSGBox3D" parent="." unique_id=2029078186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 14, -5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#RoomDividerSouth" type="CSGBox3D" parent="." unique_id=579868230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 14, 5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_3#StairsRun1" type="CSGBox3D" parent="." unique_id=475885382]
+transform = Transform3D(0.94868, 0.31623, 0, -0.31623, 0.94868, 0, 0, 0, 1, -17, 13, -1.5)
+use_collision = true
+size = Vector3(6.32, 0.1, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_3#StairsLanding" type="CSGBox3D" parent="." unique_id=176910927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 14, 0)
+use_collision = true
+size = Vector3(2, 0.1, 6)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_3#StairsRun2" type="CSGBox3D" parent="." unique_id=819570711]
+transform = Transform3D(0.94868, -0.31623, 0, 0.31623, 0.94868, 0, 0, 0, 1, -17, 15, 1.5)
+use_collision = true
+size = Vector3(34, 0.2, 20)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_4#NorthSlab" type="CSGBox3D" parent="." unique_id=3266756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 15.9, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_4#SouthSlab" type="CSGBox3D" parent="." unique_id=1372206029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 15.9, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_4#CorridorNorth_1" type="CSGBox3D" parent="." unique_id=350763103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 18, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#CorridorNorth_2" type="CSGBox3D" parent="." unique_id=1383021839]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 18, -1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#CorridorNorth_3" type="CSGBox3D" parent="." unique_id=787603719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 18, -1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#CorridorSouth_1" type="CSGBox3D" parent="." unique_id=779462644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 18, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#CorridorSouth_2" type="CSGBox3D" parent="." unique_id=1214262823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 18, 1.5)
+use_collision = true
+size = Vector3(14, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#CorridorSouth_3" type="CSGBox3D" parent="." unique_id=46394114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 18, 1.5)
+use_collision = true
+size = Vector3(8, 4, 0.1)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#RoomDividerNorth" type="CSGBox3D" parent="." unique_id=428424656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 18, -5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#RoomDividerSouth" type="CSGBox3D" parent="." unique_id=838366012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 18, 5.75)
+use_collision = true
+size = Vector3(0.1, 4, 8.5)
+material = SubResource("StandardMaterial3D_walls")
+
+[node name="Hotel_Floor_4#StairsRun1" type="CSGBox3D" parent="." unique_id=1321904794]
+transform = Transform3D(0.94868, 0.31623, 0, -0.31623, 0.94868, 0, 0, 0, 1, -17, 17, -1.5)
+use_collision = true
+size = Vector3(6.32, 0.1, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_4#StairsLanding" type="CSGBox3D" parent="." unique_id=1327701886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 18, 0)
+use_collision = true
+size = Vector3(2, 0.1, 6)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Floor_4#StairsRun2" type="CSGBox3D" parent="." unique_id=154491133]
+transform = Transform3D(0.94868, -0.31623, 0, 0.31623, 0.94868, 0, 0, 0, 1, -17, 19, 1.5)
+use_collision = true
+size = Vector3(34, 0.2, 20)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Roof#NorthRoofSlab" type="CSGBox3D" parent="." unique_id=1820494073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 19.9, -6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Hotel_Roof#SouthRoofSlab" type="CSGBox3D" parent="." unique_id=1564244379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 19.9, 6.5)
+use_collision = true
+size = Vector3(6, 0.2, 7)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=407093843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 25.88768, 0)
 script = ExtResource("1_script")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1494807506]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_player")
 
-[node name="Head" type="Node3D" parent="Player"]
+[node name="Head" type="Node3D" parent="Player" unique_id=1425200426]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Player/Head"]
+[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=1530092119]
 current = true
 
-[node name="CeilingCheck" type="RayCast3D" parent="Player"]
+[node name="CeilingCheck" type="RayCast3D" parent="Player" unique_id=1811079153]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 1, 0)
