@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://c4ejqc16w15i2"]
+
+[ext_resource type="Script" uid="uid://bnfc5qdmqdhp6" path="res://scenes/pantalla_carga_iniciar_juego/carga.gd" id="1_script_carga"]
+[ext_resource type="FontFile" uid="uid://dhbot5c2ews1y" path="res://res/PeterFonts.otf" id="2_font_intro"]
+[ext_resource type="FontFile" uid="uid://cl8yqnrymqwyy" path="res://res/fonts/Ancientkeeper-Regular.ttf" id="3_y8qfv"]
+
+[node name="Carga" type="Node2D" unique_id=1575821213]
+script = ExtResource("1_script_carga")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=16965276]
+
+[node name="FondoNegro" type="ColorRect" parent="CanvasLayer" unique_id=1820957515]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=2108679055]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.215
+offset_bottom = -32.215027
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelMental" type="Label" parent="CanvasLayer/CenterContainer" unique_id=717396243]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_intro")
+theme_override_font_sizes/font_size = 160
+text = "Mental"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelCompany" type="Label" parent="CanvasLayer/CenterContainer" unique_id=816530315]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_y8qfv")
+theme_override_font_sizes/font_size = 190
+text = "DZ Develop"
+horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1113412315]
+volume_db = -5.0

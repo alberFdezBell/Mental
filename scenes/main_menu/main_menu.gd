@@ -1,12 +1,20 @@
 extends Node3D
 
+# --- CONFIGURACIÓN DE ESCENA ---
+@export_file("*.tscn") var ESCENA_JUEGO_PATH: String = "res://scenes/pantalla_carga_iniciar_juego/carga.tscn"
 const MAIN_MENU_PATH = "res://scenes/main_menu/main_menu.tscn"
+
+# --- CONFIGURACIÓN DE LA SECUENCIA DE JUEGO (NUEVO) ---
+@export_range(1, 10) var cantidad_parpadeos: int = 4 # Modifica esto en el Inspector para cambiar el número de destellos
 
 @onready var pause_menu: Control = $PauseMenuLayer/PauseMenu
 @onready var main_menu_layer: CanvasLayer = $MainMenuLayer
 @onready var menu_container: Control = $MainMenuLayer/LeftMenuContainer
 @onready var player: Node3D = $Player
 @onready var back_button: Button = $MainMenuLayer/BackButton
+
+# --- NODO PARA EL FUNDIDO A NEGRO ---
+@onready var fade_rect: ColorRect = $FadeLayer/FadeRect
 
 # --- NODOS DE CONFIGURACIÓN ---
 @onready var settings_container: Control = $MainMenuLayer/SettingsContainer
@@ -20,11 +28,15 @@ const MAIN_MENU_PATH = "res://scenes/main_menu/main_menu.tscn"
 @onready var area_light_2: AreaLight3D = $AreaLight3D2
 @onready var audio_parpadeo: AudioStreamPlayer3D = $tililar
 
+# --- NODOS DE AUDIO ---
+@onready var audio_fondo: AudioStreamPlayer = $fondo
+var audio_romper: AudioStreamPlayer3D
+
 var base_omni_energy: float
 var base_area1_energy: float
 var base_area2_energy: float
 
-enum EstadoLuz { NORMAL, PARPADEO_ESTANDAR, PRE_APAGON, APAGON_TOTAL, POST_APAGON }
+enum EstadoLuz { NORMAL, PARPADEO_ESTANDAR, PRE_APAGON, APAGON_TOTAL, POST_APAGON, SECUENCIA_JUGAR }
 var estado_actual: EstadoLuz = EstadoLuz.NORMAL
 
 var tiempo_proximo_evento: float = 2.0
@@ -45,6 +57,8 @@ var en_configuracion: bool = false
 const VELOCIDAD_GIRO: float = 2.0
 
 var juego_iniciado: bool = false
+var juego_iniciando: bool = false 
+var tiempo_parpadeo_jugar: float = 0.0
 
 # Posiciones de reposo originales
 var menu_pos_original: float = 0.0
@@ -52,15 +66,15 @@ var back_button_pos_original: float = 0.0
 var settings_pos_original: float = 0.0
 var titulo_pos_original: float = 0.0
 
-# Progreso de animación: 0.0 (Menú) -> 1.0 (Ajustes)
+# Progreso de animación: 0.0 (Menú) -> 1.0 (Desplazado)
 var ui_progreso: float = 0.0
 
 const MENU_DESP_IZQ: float = 600.0
 const BACK_DESP_DER: float = 500.0
 const SETTINGS_DESP_DER: float = 800.0
-const TITULO_DESP_DER: float = 800.0 # Desplazamiento asignado al título
+const TITULO_DESP_DER: float = 800.0
 
-# Nodo Popup interno del OptionButton para controlar el despliegue dinámico
+# Nodo Popup interno del OptionButton
 var popup_resolucion: PopupMenu
 
 # Lista de resoluciones compatibles
@@ -73,13 +87,23 @@ var resoluciones: Array[Vector2i] = [
 ]
 
 func _ready() -> void:
-	# Forzar subventanas embebidas para compatibilidad estricta con pantalla completa
 	get_viewport().gui_embed_subwindows = true
 
 	pause_menu.visible = false
 	main_menu_layer.visible = true
 	get_tree().paused = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+	# Instanciamos dinámicamente el audio de ruptura
+	audio_romper = AudioStreamPlayer3D.new()
+	audio_romper.stream = load("res://res/audio/menuPrincipal/bombilla_romper.mp3")
+	audio_romper.volume_db = -5.0
+	add_child(audio_romper)
+
+	# Asegurar que el fade empiece invisible
+	if fade_rect:
+		fade_rect.modulate.a = 0.0
+		fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -109,7 +133,6 @@ func _ready() -> void:
 
 	_inicializar_opciones_configuracion()
 	
-	# Obtenemos el PopupMenu interno que se encarga de mostrar la lista desplegable
 	if resolution_option:
 		popup_resolucion = resolution_option.get_popup()
 
@@ -120,17 +143,24 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if player:
 		player.rotation.y = lerp_angle(player.rotation.y, angulo_objetivo_y, VELOCIDAD_GIRO * delta)
-		var angulo_config_y = angulo_origen_y - deg_to_rad(55.0)
 		
-		if not is_equal_approx(angulo_origen_y, angulo_config_y):
-			ui_progreso = remap(player.rotation.y, angulo_origen_y, angulo_config_y, 0.0, 1.0)
-			ui_progreso = clampf(ui_progreso, 0.0, 1.0)
+		if juego_iniciando:
+			var angulo_jugar_y = angulo_origen_y + deg_to_rad(-27.5)
+			if not is_equal_approx(angulo_origen_y, angulo_jugar_y):
+				ui_progreso = remap(player.rotation.y, angulo_origen_y, angulo_jugar_y, 0.0, 1.0)
+				ui_progreso = clampf(ui_progreso, 0.0, 1.0)
+			else:
+				ui_progreso = 1.0
+			_aplicar_ui_progreso_jugar(ui_progreso)
 		else:
-			ui_progreso = 1.0 if en_configuracion else 0.0
-			
-		_aplicar_ui_progreso(ui_progreso)
+			var angulo_config_y = angulo_origen_y - deg_to_rad(55.0)
+			if not is_equal_approx(angulo_origen_y, angulo_config_y):
+				ui_progreso = remap(player.rotation.y, angulo_origen_y, angulo_config_y, 0.0, 1.0)
+				ui_progreso = clampf(ui_progreso, 0.0, 1.0)
+			else:
+				ui_progreso = 1.0 if en_configuracion else 0.0
+			_aplicar_ui_progreso(ui_progreso)
 
-		# ACTUALIZACIÓN EN TIEMPO REAL DEL DESPLEGABLE:
 		if popup_resolucion and popup_resolucion.visible:
 			var boton_pos_local = resolution_option.global_position
 			var nueva_pos_popup = boton_pos_local + Vector2(0, resolution_option.size.y)
@@ -138,6 +168,13 @@ func _process(delta: float) -> void:
 			popup_resolucion.size.x = int(resolution_option.size.x)
 
 	if get_tree().paused:
+		return
+
+	if estado_actual == EstadoLuz.SECUENCIA_JUGAR:
+		return
+
+	if estado_actual == EstadoLuz.APAGON_TOTAL and juego_iniciando:
+		_apagar_luces_por_completo()
 		return
 
 	tiempo_proximo_evento -= delta
@@ -184,8 +221,18 @@ func _aplicar_ui_progreso(p: float) -> void:
 	if settings_container:
 		settings_container.position.x = settings_pos_original + (SETTINGS_DESP_DER * (1.0 - p))
 	if label_titulo:
-		# El título se moverá de forma idéntica a la caja de opciones
 		label_titulo.position.x = titulo_pos_original + (TITULO_DESP_DER * (1.0 - p))
+
+
+func _aplicar_ui_progreso_jugar(p: float) -> void:
+	if menu_container:
+		menu_container.position.x = menu_pos_original - (MENU_DESP_IZQ * p)
+	if back_button:
+		back_button.position.x = back_button_pos_original + BACK_DESP_DER
+	if settings_container:
+		settings_container.position.x = settings_pos_original + SETTINGS_DESP_DER
+	if label_titulo:
+		label_titulo.position.x = titulo_pos_original + TITULO_DESP_DER
 
 
 func _inicializar_opciones_configuracion() -> void:
@@ -243,12 +290,16 @@ func _apagar_luces_por_completo() -> void:
 	area_light_2.light_energy = 0.0
 
 
-func _restaurar_luces_normales() -> void:
-	estado_actual = EstadoLuz.NORMAL
-	tiempo_proximo_evento = randf_range(TIEMPO_ESPERA_MIN, TIEMPO_ESPERA_MAX)
+func _restaurar_luces_valores_base() -> void:
 	omni_light.light_energy = base_omni_energy
 	area_light_1.light_energy = base_area1_energy
 	area_light_2.light_energy = base_area2_energy
+
+
+func _restaurar_luces_normales() -> void:
+	estado_actual = EstadoLuz.NORMAL
+	tiempo_proximo_evento = randf_range(TIEMPO_ESPERA_MIN, TIEMPO_ESPERA_MAX)
+	_restaurar_luces_valores_base()
 	if audio_parpadeo and audio_parpadeo.playing:
 		audio_parpadeo.stop()
 
@@ -261,6 +312,8 @@ func _calcular_ruido_parpadeo() -> float:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if juego_iniciando:
+		return 
 	if not juego_iniciado:
 		if en_configuracion and event.is_action_pressed("ui_cancel"):
 			_volver_de_configuracion()
@@ -289,18 +342,89 @@ func _on_main_menu_button_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	if en_configuracion: return
-	juego_iniciado = true
-	main_menu_layer.visible = false
+	if en_configuracion or juego_iniciando: return
+	
+	juego_iniciando = true
+	angulo_objetivo_y = angulo_origen_y + deg_to_rad(-27.5) 
+	estado_actual = EstadoLuz.SECUENCIA_JUGAR
+	
 	if player:
-		player.set_process(true)
-		player.set_physics_process(true)
-		player.set_process_unhandled_input(true)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		player.set_process(false)
+		player.set_physics_process(false)
+		player.set_process_unhandled_input(false)
+		
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+	var secuencia_tween = create_tween()
+	
+	# 1. FADE OUT REAL ASOCIANDO UN MÉTODO (Interpola de volumen inicial a silencio usando decibelios)
+	if audio_fondo:
+		# Guardamos el volumen lineal inicial de la canción antes de empezar el fade
+		var volumen_inicial_linear = db_to_linear(audio_fondo.volume_db)
+		
+		# Modificamos la propiedad volume_db pasándole la conversión lineal a db
+		secuencia_tween.tween_method(
+			func(valor_lineal: float): audio_fondo.volume_db = linear_to_db(valor_lineal),
+			volumen_inicial_linear, # Valor de inicio (ej: 1.0 o el valor que tenga configurado)
+			0.0,                    # Valor de destino (silencio absoluto)
+			0.8                     # Duración en segundos (música en silencio a mitad del giro de la cámara)
+		).set_trans(Tween.TRANS_LINEAR)
+	
+	# Espera estratégica mientras la cámara termina de posicionarse y se asienta el silencio absoluto
+	secuencia_tween.tween_interval(0.7)
+	
+	# 2. INICIO DE AUDIO DE PARPADEO
+	if audio_parpadeo:
+		secuencia_tween.tween_callback(audio_parpadeo.play)
+	
+	# --- BUCLE DE PARPADEOS DINÁMICOS CON CANTIDAD CONFIGURABLE ---
+	for i in range(cantidad_parpadeos):
+		var duracion_apagon = randf_range(0.06, 0.14)
+		var duracion_encendido = randf_range(0.08, 0.22)
+		
+		# Apagón rápido del destello actual
+		secuencia_tween.tween_callback(_apagar_luces_por_completo)
+		secuencia_tween.tween_interval(duracion_apagon)
+		
+		# Encendido intermedio del destello actual (excepto si es el último ciclo, que se corta de golpe)
+		if i < cantidad_parpadeos - 1:
+			secuencia_tween.tween_callback(_restaurar_luces_valores_base)
+			secuencia_tween.tween_interval(duracion_encendido)
+		else:
+			# Un pequeñísimo destello final muy estético antes de fundirse por completo
+			secuencia_tween.tween_callback(_restaurar_luces_valores_base)
+			secuencia_tween.tween_interval(0.08)
+	
+	# 3. APAGÓN COMPLETO, SE ROMPE LA BOMBILLA Y SE DETIENE EL PARPADEO
+	secuencia_tween.tween_callback(func():
+		estado_actual = EstadoLuz.APAGON_TOTAL
+		_apagar_luces_por_completo()
+		
+		if audio_parpadeo and audio_parpadeo.playing:
+			audio_parpadeo.stop()
+			
+		if audio_romper:
+			audio_romper.play()
+	)
+	
+	secuencia_tween.tween_interval(0.4) 
+	
+	# 4. INICIO FADE OUT (FUNDIDO A NEGRO)
+	if fade_rect:
+		secuencia_tween.tween_callback(func():
+			fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+			var fade_tween = create_tween()
+			fade_tween.tween_property(fade_rect, "modulate:a", 1.0, 1.5).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+			fade_tween.tween_callback(func(): get_tree().change_scene_to_file(ESCENA_JUEGO_PATH))
+		)
+	else:
+		secuencia_tween.tween_callback(func():
+			get_tree().change_scene_to_file(ESCENA_JUEGO_PATH)
+		)
 
 
 func _on_settings_button_pressed() -> void:
-	if en_configuracion: return
+	if en_configuracion or juego_iniciando: return
 	en_configuracion = true
 	angulo_objetivo_y = angulo_origen_y - deg_to_rad(55.0)
 
