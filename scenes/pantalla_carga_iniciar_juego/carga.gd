@@ -11,7 +11,7 @@ extends Node2D
 @export var duracion_fade_out_company: float = 2.0
 
 # --- RUTA DE LA ESCENA SIGUIENTE ---
-@export_file("*.tscn") var ESCENA_JUEGO_PATH: String = "res://scenes/game/game_level.tscn"
+@export_file("*.tscn") var ESCENA_JUEGO_PATH: String = "res://scenes/pruebas_movilidad/pruebas_movilidad.tscn"
 
 # --- REFERENCIAS DE NODOS ---
 @onready var fondo_negro: ColorRect = $CanvasLayer/FondoNegro
