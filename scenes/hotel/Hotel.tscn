@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://kmwvhkrl2eus"]
+
+[node name="Hotel" type="Node3D" unique_id=1086344975]
+
+[node name="SueloHotel" type="CSGBox3D" parent="." unique_id=1570033970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17794815, 0)
+use_collision = true
+size = Vector3(30, 0.2, 18)
